@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
       title: 'GO',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          hintColor: Color(0xFFC0F0E8),
-          primaryColor: Color(0xFF80E1D1),
+          hintColor: Color(0xFF80E121),
+          primaryColor: Color(0xFFC084A8),
           fontFamily: "Montserrat",
           canvasColor: Colors.transparent),
       home: new StreamBuilder(
