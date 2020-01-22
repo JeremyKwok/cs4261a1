@@ -22,6 +22,8 @@ class _LoginRegisterState extends State<LoginRegister> {
 
   void initState() {
     super.initState();
+    Firestore.instance.collection('books').document()
+        .setData({ 'title': 'title', 'author': 'author' });
   }
 
   @override
@@ -141,8 +143,8 @@ class _LoginRegisterState extends State<LoginRegister> {
           _loading = true;
         });
         try {
-          FirebaseUser user = await FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: _email, password: _password);
+          FirebaseUser user = (await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: _email, password: _password)).user;
           Navigator.of(context).pushReplacementNamed('/home');
         } catch (error) {
           switch (error.code) {
@@ -205,9 +207,9 @@ class _LoginRegisterState extends State<LoginRegister> {
           _loading = true;
         });
         try {
-          FirebaseUser user = await FirebaseAuth.instance
+          FirebaseUser user = (await FirebaseAuth.instance
               .createUserWithEmailAndPassword(
-              email: _email, password: _password);
+              email: _email, password: _password)).user;
           UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
           userUpdateInfo.displayName = _displayName;
           user.updateProfile(userUpdateInfo).then((onValue) {
