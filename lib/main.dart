@@ -1,48 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'home.dart';
-import 'login-register.dart';
+import 'services/authentication.dart';
+import 'pages/root_page.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(new MyApp());
-  });
+  runApp(new MyApp());
 }
 
-final FirebaseAuth auth = FirebaseAuth.instance;
-
-
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // login page parameters:
+  // primary swatch color
+  static const primarySwatch = Colors.green;
+  // button color
+  static const buttonColor = Colors.green;
+  // app name
+  static const appName = 'My App';
+  // boolean for showing home page if user unverified
+  static const homePageUnverified = false;
+
+  final params = {
+    'appName': appName,
+    'primarySwatch': primarySwatch,
+    'buttonColor': buttonColor,
+    'homePageUnverified': homePageUnverified,
+  };
+
+
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      title: 'GO',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          hintColor: Color(0xFF80E121),
-          primaryColor: Color(0xFFC084A8),
-          fontFamily: "Montserrat",
-          canvasColor: Colors.transparent),
-      home: new StreamBuilder(
-        stream: auth.onAuthStateChanged,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Home();
-          }
-          return LoginRegister();
-        },
-      ),
-      routes: <String, WidgetBuilder>{
-        '/home': (BuildContext context) => new Home(),
-        '/login': (BuildContext context) => new LoginRegister()
-      },
-    );
+    return new MaterialApp(
+        title: 'Flutter login demo',
+        debugShowCheckedModeBanner: true,
+        theme: new ThemeData(
+          primarySwatch: params['primarySwatch'],
+        ),
+        home: new RootPage(params: params, auth: new Auth()));
   }
 }

@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'BaseAuth.dart';
 import 'package:flutter/material.dart';
 import 'clipper.dart';
-import 'customWidget/customTextField.dart';
+import '../customWidget/customTextField.dart';
 
 class LoginRegister extends StatefulWidget {
   @override
@@ -143,8 +144,7 @@ class _LoginRegisterState extends State<LoginRegister> {
           _loading = true;
         });
         try {
-          FirebaseUser user = (await FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: _email, password: _password)).user;
+          FirebaseUser user = await Auth.signIn(email: _email, password: _password);
           Navigator.of(context).pushReplacementNamed('/home');
         } catch (error) {
           switch (error.code) {
