@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   // button color
   static const buttonColor = Colors.green;
   // app name
-  static const appName = 'My App';
+  static const appName = 'Tech Connect';
   // boolean for showing home page if user unverified
   static const homePageUnverified = false;
 
