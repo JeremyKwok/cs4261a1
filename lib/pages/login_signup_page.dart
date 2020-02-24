@@ -231,12 +231,13 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
   }
 
   String emailValidator(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (value.isEmpty) return '*Required';
-    if (!regex.hasMatch(value))
-      return '*Enter a valid email';
+    Pattern pattern1 = r'^[a-zA-Z0-9]*$';
+    Pattern pattern2 = r'^[a-zA-Z0-9]*@gatech.edu$';
+    RegExp regex1 = new RegExp(pattern1);
+    RegExp regex2 = new RegExp(pattern2);
+    if (value.isEmpty) return '*Email can\'t be empty';
+    if (!(regex1.hasMatch(value) || regex2.hasMatch(value)))
+      return '*Enter a valid @gatech.edu email';
     else
       return null;
   }
@@ -254,7 +255,7 @@ class _LoginSignUpPageState extends State<LoginSignUpPage> {
               Icons.mail,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+        validator: emailValidator,
         onSaved: (value) => _email = value.trim(),
       ),
     );
