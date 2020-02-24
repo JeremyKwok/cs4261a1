@@ -118,9 +118,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return new DefaultTabController(length: 2, child: Scaffold(
         appBar: new AppBar(
-          title: new Text(widget.params['Tech Connect']),
+          title: new Text(widget.params['appName']),
           actions: <Widget>[
             new FlatButton(
                 child: new Text('Logout',
@@ -164,6 +164,6 @@ class _HomePageState extends State<HomePage> {
           ]
     
         ),
-      );
+      ));
   }
 }
