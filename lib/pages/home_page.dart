@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text(widget.params['appName']),
+          title: new Text(widget.params['Tech Connect']),
           actions: <Widget>[
             new FlatButton(
                 child: new Text('Logout',
@@ -128,6 +128,42 @@ class _HomePageState extends State<HomePage> {
                 onPressed: _signOut)
           ],
         ),
-        body: _mainScreen());
+        body: 
+          new TabBarView(
+            children: <Widget>[
+              new Text(
+              " TabBarView placeholder 1",
+                style: new TextStyle(fontSize:12.0,
+                color: const Color(0xFF000000),
+                fontWeight: FontWeight.w200,
+                fontFamily: "Roboto"),
+              ),
+    
+              new Text(
+              " TabBarView placeholder 2",
+                style: new TextStyle(fontSize:12.0,
+                color: const Color(0xFF000000),
+                fontWeight: FontWeight.w200,
+                fontFamily: "Roboto"),
+              )
+            ]
+    
+          ),
+    
+        bottomNavigationBar: new BottomNavigationBar(
+          items: [
+            new BottomNavigationBarItem(
+              icon: const Icon(Icons.access_time),
+              title: new Text('Ongoing'),
+            ),
+    
+            new BottomNavigationBarItem(
+              icon: const Icon(Icons.add_circle),
+              title: new Text('Queue'),
+            )
+          ]
+    
+        ),
+      );
   }
 }
