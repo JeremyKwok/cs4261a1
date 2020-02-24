@@ -132,16 +132,16 @@ class _HomePageState extends State<HomePage> {
           new TabBarView(
             children: <Widget>[
               new Text(
-              " TabBarView placeholder 1",
-                style: new TextStyle(fontSize:12.0,
+              " Ongoing",
+                style: new TextStyle(fontSize:30.0,
                 color: const Color(0xFF000000),
                 fontWeight: FontWeight.w200,
                 fontFamily: "Roboto"),
               ),
     
               new Text(
-              " TabBarView placeholder 2",
-                style: new TextStyle(fontSize:12.0,
+              " Queue",
+                style: new TextStyle(fontSize:30.0,
                 color: const Color(0xFF000000),
                 fontWeight: FontWeight.w200,
                 fontFamily: "Roboto"),
