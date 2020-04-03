@@ -18,6 +18,8 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool _isEmailVerified = false;
+  var _curIndex = 0;
+  var contents = "Home";
 
   @override
   initState() {
@@ -107,6 +109,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future navigateToSubPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SubPage()));
+  }
+
+  Future navigateToQueuePage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => QueuePage()));
+  }
+
+  _queue() async {
+    try {
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget _mainScreen() {
     return Center(
         child: Text(
@@ -118,7 +136,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new DefaultTabController(length: 2, child: Scaffold(
+    return new DefaultTabController(length: 3, child: Scaffold(
         appBar: new AppBar(
           title: new Text(widget.params['appName']),
           actions: <Widget>[
@@ -145,12 +163,21 @@ class _HomePageState extends State<HomePage> {
                 color: const Color(0xFF000000),
                 fontWeight: FontWeight.w200,
                 fontFamily: "Roboto"),
+              ),
+              new RaisedButton(
+                textColor: Colors.white,
+                color: const Color(0xFF000000),
+                child: Text('Go to SubPage'),
+                onPressed: () {
+                  navigateToSubPage(context);
+                },
               )
             ]
     
           ),
-    
+
         bottomNavigationBar: new BottomNavigationBar(
+          currentIndex: _curIndex,
           items: [
             new BottomNavigationBarItem(
               icon: const Icon(Icons.access_time),
@@ -161,9 +188,106 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.add_circle),
               title: new Text('Queue'),
             )
-          ]
-    
+          ],
+          onTap: (index) {
+            setState(() {
+              _curIndex = index;
+              switch (_curIndex) {
+                case 0:
+                  contents = "Ongoing";
+                  navigateToSubPage(context);
+                  break;
+                case 1:
+                  contents = "Queue";
+                  navigateToQueuePage(context);
+                  break;
+              }
+            });
+          }
         ),
       ));
   }
 }
+
+
+class SubPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Ongoing'),
+        backgroundColor: Colors.redAccent,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Click button to back to Main Page'),
+            RaisedButton(
+              textColor: Colors.white,
+              color: Colors.redAccent,
+              child: Text('Back to Main Page'),
+              onPressed: () {
+                // TODO
+                },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class QueuePage extends StatefulWidget {
+  QueuePage({Key key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() {
+    return _QueuePage();
+  }
+}
+
+String dropdownValue = "select";
+class _QueuePage extends State<QueuePage> {
+  String dropdownValue = 'select';
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: DropdownButton<String>(
+            value: dropdownValue,
+            icon: Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: TextStyle(
+                color: Colors.black
+            ),
+            underline: Container(
+              height: 2,
+              color: Colors.black,
+            ),
+            onChanged: (String newValue) {
+              setState(() {
+                dropdownValue = newValue;
+              });
+            },
+            items: <String>['select', 'Placeholder_activity1', 'Placeholder_activity2', 'Placeholder_activity3']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            // source: https://api.flutter.dev/flutter/material/DropdownButton-class.html
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+

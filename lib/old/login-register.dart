@@ -144,7 +144,7 @@ class _LoginRegisterState extends State<LoginRegister> {
           _loading = true;
         });
         try {
-          FirebaseUser user = await Auth.signIn(email: _email, password: _password);
+          FirebaseUser user = await Auth().signIn(_email, _password);
           Navigator.of(context).pushReplacementNamed('/home');
         } catch (error) {
           switch (error.code) {

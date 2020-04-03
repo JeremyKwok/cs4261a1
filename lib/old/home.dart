@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
+import 'BaseAuth.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -60,7 +61,7 @@ class _HomeState extends State<Home> {
                 style: TextStyle(color: Theme.of(context).primaryColor),
               ),
               onPressed: () {
-                auth.signOut().then((onValue) {
+                Auth().signOut().then((onValue) {
                   Navigator.of(context).pushReplacementNamed('/login');
                 });
               },
