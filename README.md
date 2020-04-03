@@ -12,6 +12,9 @@ Students on Georgia Tech’s campus are always looking for some kind of recreati
 
 Our project aims to be able to **connect students with common interest in a particular sport on a specific timeframe to create instantaneous groups for pickup games of various sports**.
 
+## Architecture
+![Image of Architecture](documentation/images/4261archi.png)
+
 ## References & Technologies
 * Flutter for cross platform development
 * Android Studio as the development environment
