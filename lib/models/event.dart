@@ -16,25 +16,29 @@ String eventToJson(Event data) {
 }
 
 class Event {
+  String id;
   String userId;
   // String timing;
   // String activity;
-  String pax;
-  String attending;
+  int pax;
+  int attending;
 
   Event({
+    this.id,
     this.userId,
     this.pax,
     this.attending
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => new Event(
+      id: json["id"],
       userId: json["userId"],
       pax: json["pax"],
       attending: json["attending"]
   );
 
   Map<String, dynamic> toJson() => {
+    "id": id,
     "userId": userId,
     "pax": pax,
     "attending": attending

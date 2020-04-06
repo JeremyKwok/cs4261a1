@@ -16,20 +16,24 @@ String groupToJson(Group data) {
 }
 
 class Group {
+  String id;
   String userId;
-  String pax;
+  int pax;
 
   Group({
+    this.id,
     this.userId,
     this.pax
   });
 
   factory Group.fromJson(Map<String, dynamic> json) => new Group(
+    id: json["id"],
     userId: json["userId"],
     pax: json["pax"]
   );
 
   Map<String, dynamic> toJson() => {
+    "id": id,
     "userId": userId,
     "pax": pax
   };

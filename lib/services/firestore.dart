@@ -14,14 +14,14 @@ class FirestoreService {
     DocumentReference dr = db.collection(timing).document(activity);
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot ds = await tx.get(dr.collection(uid).document('fields'));
-      final Event event = new Event(ds.documentID, 6, 0);
-      final Map<String, dynamic> data = event.toMap();
+      final Event event = new Event(id: ds.documentID, userId: uid, pax: 6, attending: 0);
+      final Map<String, dynamic> data = event.toJson();
       await tx.set(ds.reference, data);
       return data;
     };
     await createGroup(timing, activity, uid, uid, pax);
     return Firestore.instance.runTransaction(createTransaction).then((mapData){
-      return event.fromMap(mapData);
+      return Event.fromJson(mapData);
     }).catchError((error) {
       print('error: $error');
       return null;
@@ -31,13 +31,13 @@ class FirestoreService {
     DocumentReference dr = db.collection(timing).document(activity);
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot ds = await tx.get(dr.collection(uid).document());
-      final Group group = new Group(ds.documentID, id, pax);
-      final Map<String, dynamic> data = group.toMap();
+      final Group group = new Group(id: ds.documentID, userId: id, pax: pax);
+      final Map<String, dynamic> data = group.toJson();
       await tx.set(ds.reference, data);
       return data;
     };
     return db.runTransaction(createTransaction).then((mapData){
-      return group.fromMap(mapData);
+      return Group.fromJson(mapData);
     }).catchError((error) {
       print('error: $error');
       return null;
@@ -48,7 +48,7 @@ class FirestoreService {
     final TransactionHandler updateTransaction = (Transaction tx) async {
       final DocumentSnapshot ds = await tx.get(dr);
 
-      await tx.update(ds.reference, event.toMap());
+      await tx.update(ds.reference, event.toJson());
       return {'updated': true};
     };
 
