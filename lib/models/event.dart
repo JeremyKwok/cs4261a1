@@ -40,7 +40,7 @@ class Event {
     "attending": attending
   };
 
-  factory Group.fromDocument(DocumentSnapshot doc) {
-    return Group.fromJson(doc.data);
+  factory Event.fromDocument(DocumentSnapshot doc) {
+    return Event.fromJson(doc.data);
   }
 }
