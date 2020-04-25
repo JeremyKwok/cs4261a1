@@ -117,6 +117,10 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => QueuePage()));
   }
 
+  Future navigateToSymptomPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SymptomPage()));
+  }
+
   _queue() async {
     try {
 
@@ -158,7 +162,7 @@ class _HomePageState extends State<HomePage> {
               ),
     
               new Text(
-              " Queue",
+              " Symptoms",
                 style: new TextStyle(fontSize:30.0,
                 color: const Color(0xFF000000),
                 fontWeight: FontWeight.w200,
@@ -186,7 +190,7 @@ class _HomePageState extends State<HomePage> {
     
             new BottomNavigationBarItem(
               icon: const Icon(Icons.add_circle),
-              title: new Text('Queue'),
+              title: new Text('Symptom Tracker'),
             )
           ],
           onTap: (index) {
@@ -198,8 +202,8 @@ class _HomePageState extends State<HomePage> {
                   navigateToSubPage(context);
                   break;
                 case 1:
-                  contents = "Queue";
-                  navigateToQueuePage(context);
+                  contents = "Symptom Tracker";
+                  navigateToSymptomPage(context);
                   break;
               }
             });
@@ -246,6 +250,14 @@ class QueuePage extends StatefulWidget {
   }
 }
 
+class SymptomPage extends StatefulWidget {
+  SymptomPage({Key key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() {
+    return _SymptomPage();
+  }
+}
+
 String dropdownValue = "select";
 class _QueuePage extends State<QueuePage> {
   String dropdownValue = 'select';
@@ -284,6 +296,144 @@ class _QueuePage extends State<QueuePage> {
         ),
       ),
     );
+  }
+}
+
+class _SymptomPage extends State<SymptomPage> {
+
+  @override
+
+  bool hasCough = false;
+  bool hasFever = false;
+  bool hasDifficultyBreathing = false;
+  bool hasChills = false;
+  bool hasMusclePain = false;
+  bool hasHeadache = false;
+  bool hasSoreThroat = false;
+  bool hasLossofSense = false;
+
+  var _curIndex = 0;
+  var contents = "Home";
+
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Check all Symptoms you have'),
+          ),
+            body: Container(
+              child: Column(
+                  children: <Widget> [
+                    CheckboxListTile(
+                      title: Text('Dry Cough'),
+                      value: hasCough,
+                      onChanged: (value){
+                        setState(() {
+                          hasCough = value;
+                        });
+                      },
+                      activeColor: Colors.pink,
+                      checkColor: Colors.white,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      title: Text('Fever'),
+                      value: hasFever,
+                      onChanged: (value){
+                        setState(() {
+                          hasFever = value;
+                        });
+                      },
+                      activeColor: Colors.pink,
+                      checkColor: Colors.white,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      title: Text('Difficulty Breathing or Shortness of Breath'),
+                      value: hasDifficultyBreathing,
+                      onChanged: (bool value){
+                        setState(() {
+                          hasDifficultyBreathing = value;
+                        });
+                      },
+                      activeColor: Colors.pink,
+                      checkColor: Colors.white,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      title: Text('Chills'),
+                      value: hasChills,
+                      onChanged: (value){
+                        setState(() {
+                          hasChills = value;
+                        });
+                      },
+                      activeColor: Colors.pink,
+                      checkColor: Colors.white,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+
+                    CheckboxListTile(
+                      title: Text('Muscle Pain'),
+                      value: hasMusclePain,
+                      onChanged: (value){
+                        setState(() {
+                          hasMusclePain = value;
+                        });
+                      },
+                      activeColor: Colors.pink,
+                      checkColor: Colors.white,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      title: Text('Headache'),
+                      value: hasHeadache,
+                      onChanged: (value){
+                        setState(() {
+                          hasHeadache = value;
+                        });
+                      },
+                      activeColor: Colors.pink,
+                      checkColor: Colors.white,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      title: Text('Sore Throat'),
+                      value: hasSoreThroat,
+                      onChanged: (value){
+                        setState(() {
+                          hasSoreThroat = value;
+                        });
+                      },
+                      activeColor: Colors.pink,
+                      checkColor: Colors.white,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      title: Text('New Loss of Taste or Smell'),
+                      value: hasLossofSense,
+                      onChanged: (value){
+                        setState(() {
+                          hasLossofSense = value;
+                        });
+                      },
+                      activeColor: Colors.pink,
+                      checkColor: Colors.white,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    RaisedButton (
+                      onPressed: () {
+
+                      },
+                      child: Text('Submit'),
+                    )
+
+                  ]
+
+              ),
+            )
+        ));
   }
 }
 
