@@ -153,6 +153,8 @@ class _HomePageState extends State<HomePage> {
         body: 
           new TabBarView(
             children: <Widget>[
+              new Image.asset('assets/coronavirus_us.png'),
+
               new Text(
               " Ongoing",
                 style: new TextStyle(fontSize:30.0,
@@ -168,14 +170,7 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.w200,
                 fontFamily: "Roboto"),
               ),
-              new RaisedButton(
-                textColor: Colors.white,
-                color: const Color(0xFF000000),
-                child: Text('Go to SubPage'),
-                onPressed: () {
-                  navigateToSubPage(context);
-                },
-              )
+
             ]
     
           ),
@@ -185,11 +180,11 @@ class _HomePageState extends State<HomePage> {
           items: [
             new BottomNavigationBarItem(
               icon: const Icon(Icons.access_time),
-              title: new Text('Ongoing'),
+              title: new Text('My Symptoms'),
             ),
     
             new BottomNavigationBarItem(
-              icon: const Icon(Icons.add_circle),
+              icon: const Icon(Icons.list),
               title: new Text('Symptom Tracker'),
             )
           ],
@@ -219,22 +214,16 @@ class SubPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ongoing'),
-        backgroundColor: Colors.redAccent,
+        title: Text('My Symptoms'),
+        backgroundColor: Colors.green,
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text('Click button to back to Main Page'),
-            RaisedButton(
-              textColor: Colors.white,
-              color: Colors.redAccent,
-              child: Text('Back to Main Page'),
-              onPressed: () {
-                // TODO
-                },
-            )
+            Text('Your reported symptoms from the past 14 days'),
+
+
           ],
         ),
       ),
