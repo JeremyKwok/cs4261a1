@@ -1,3 +1,4 @@
+import 'package:cs4261a1/ui/pages/create_status_page.dart';
 import 'package:cs4261a1/ui/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:cs4261a1/services/authentication.dart';
@@ -114,6 +115,10 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SubPage()));
   }
 
+  Future navigateToStatusPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => StatusMaterial()));
+  }
+
   Future navigateToQueuePage(context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => QueuePage()));
   }
@@ -211,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                   break;
                 case 1:
                   contents = "Symptom Tracker";
-                  navigateToSymptomPage(context);
+                  navigateToStatusPage(context);
                   break;
               }
             });

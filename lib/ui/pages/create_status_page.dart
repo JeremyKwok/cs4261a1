@@ -25,8 +25,11 @@ class _StatusMaterialState extends State {
   final _formKey = GlobalKey<FormState>();
   final _status = Status();
 
+
   @override
   Widget build(BuildContext context) {
+    _status.initState();
+
     return Scaffold(
         appBar: AppBar(title: Text('Record Symptoms')),
         body: Container(

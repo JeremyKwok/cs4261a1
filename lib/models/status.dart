@@ -37,6 +37,20 @@ class Status {
     this.diarrhoea
   });
 
+
+  void initState() {
+      this.date = null;
+      this.userId = null;
+      this.temp = null;
+      if (this.nasalCongestion == null || this.tiredness == null || this.bodyache == null || this.soreThroat == null || this.diarrhoea == null) {
+        this.tiredness = false;
+        this.bodyache = false;
+        this.nasalCongestion = false;
+        this.soreThroat = false;
+        this.diarrhoea = false;
+      }
+  }
+
   factory Status.fromJson(Map<String, dynamic> json) => new Status(
     date: json["date"],
     userId: json["userId"],
