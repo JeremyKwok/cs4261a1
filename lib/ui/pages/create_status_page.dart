@@ -65,7 +65,7 @@ class _StatusMaterialState extends State {
                               return null;
                             },
                             onSaved: (val) =>
-                                setState(() => _status.temp = int.parse(val)),
+                                setState(() => _status.temp = double.parse(val)),
                           ),
                           Container(
                             padding: const EdgeInsets.fromLTRB(0, 50, 0, 20),

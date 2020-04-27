@@ -16,7 +16,7 @@ class CreateStatusViewModel extends BaseModel {
   bool get _editting => _edittingStatus != null;
 
   Future addStatus({@required DateTime date,
-  @required int temp,
+  @required double temp,
   @required bool tiredness,
   @required bool bodyache,
   @required bool nasalCongestion,

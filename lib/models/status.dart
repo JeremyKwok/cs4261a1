@@ -18,7 +18,7 @@ String statusToJson(Status data) {
 class Status {
   DateTime date;
   String userId;
-  int temp;
+  double temp;
   bool tiredness;
   bool bodyache;
   bool nasalCongestion;
