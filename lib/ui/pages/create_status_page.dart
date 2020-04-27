@@ -11,9 +11,6 @@ import 'package:intl/intl.dart';
 
 
 class StatusMaterial extends StatefulWidget {
-  StatusMaterial({Key key, this.userId})
-      : super(key: key);
-  final String userId;
   @override
   _StatusMaterialState createState() => new _StatusMaterialState();
 }
