@@ -2,6 +2,7 @@ import 'package:cs4261a1/ui/pages/create_status_page.dart';
 import 'package:cs4261a1/ui/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:cs4261a1/services/authentication.dart';
+import 'package:cs4261a1/ui/pages/mywebview.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.params, this.auth, this.userId, this.onSignedOut})
@@ -173,6 +174,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Image.asset('assets/coronavirus_us.png'),
+                  FlatButton(
+                    child: Text("Open Webpage"),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => MyWebView(
+                            title: "Covid Symptoms info",
+                            selectedUrl: "https://www.who.int/news-room/q-a-detail/q-a-coronaviruses#:~:text=symptoms",
+                          )));
+                    },
+                  ),
                 ],
               ),
     
