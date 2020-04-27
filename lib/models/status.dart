@@ -16,7 +16,7 @@ String statusToJson(Status data) {
 }
 
 class Status {
-  String id;
+  String date;
   String userId;
   int temp;
   bool tiredness;
@@ -27,7 +27,7 @@ class Status {
 
 
   Status({
-    this.id,
+    this.date,
     this.userId,
     this.temp,
     this.tiredness,
@@ -38,7 +38,7 @@ class Status {
   });
 
   factory Status.fromJson(Map<String, dynamic> json) => new Status(
-    id: json["id"],
+    date: json["date"],
     userId: json["userId"],
     temp: json["temp"],
     tiredness: json["tire"],
@@ -49,7 +49,7 @@ class Status {
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
+    "date": date,
     "userId": userId,
     "temp": temp,
     "tiredness": tiredness,
