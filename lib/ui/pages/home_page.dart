@@ -1,5 +1,8 @@
+import 'package:cs4261a1/ui/pages/create_status_page.dart';
+import 'package:cs4261a1/ui/widgets/input_field.dart';
 import 'package:flutter/material.dart';
-import '../services/authentication.dart';
+import 'package:cs4261a1/services/authentication.dart';
+import 'package:cs4261a1/ui/pages/mywebview.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.params, this.auth, this.userId, this.onSignedOut})
@@ -113,6 +116,10 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SubPage()));
   }
 
+  Future navigateToStatusPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => StatusMaterial()));
+  }
+
   Future navigateToQueuePage(context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => QueuePage()));
   }
@@ -140,7 +147,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new DefaultTabController(length: 3, child: Scaffold(
+    return new DefaultTabController(length: 2, child: Scaffold(
         appBar: new AppBar(
           title: new Text(widget.params['appName']),
           actions: <Widget>[
@@ -153,23 +160,45 @@ class _HomePageState extends State<HomePage> {
         body: 
           new TabBarView(
             children: <Widget>[
-              new Image.asset('assets/coronavirus_us.png'),
 
-              new Text(
-              " Ongoing",
-                style: new TextStyle(fontSize:30.0,
-                color: const Color(0xFF000000),
-                fontWeight: FontWeight.w200,
-                fontFamily: "Roboto"),
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "COVID-19 News",
+                    style: new TextStyle(
+                        fontSize: 30.0,
+                        color: const Color(0xFF000000),
+                        fontWeight: FontWeight.w200,
+                        fontFamily: "Roboto"
+                    ),
+                  ),
+                  Image.asset('assets/coronavirus_us.png'),
+                  FlatButton(
+                    child: Text("Open Webpage"),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => MyWebView(
+                            title: "Covid Symptoms info",
+                            selectedUrl: "https://www.who.int/news-room/q-a-detail/q-a-coronaviruses#:~:text=symptoms",
+                          )));
+                    },
+                  ),
+                ],
               ),
     
-              new Text(
-              " Symptoms",
-                style: new TextStyle(fontSize:30.0,
-                color: const Color(0xFF000000),
-                fontWeight: FontWeight.w200,
-                fontFamily: "Roboto"),
-              ),
+              new Column (
+               children: <Widget> [
+                 Text(
+                   "My Symptoms",
+                   style: new TextStyle(fontSize:30.0,
+                       color: const Color(0xFF000000),
+                       fontWeight: FontWeight.w200,
+                       fontFamily: "Roboto"),
+                 ),
+               ]
+              )
+
 
             ]
     
@@ -180,7 +209,7 @@ class _HomePageState extends State<HomePage> {
           items: [
             new BottomNavigationBarItem(
               icon: const Icon(Icons.access_time),
-              title: new Text('My Symptoms'),
+              title: new Text('My Symptoms Notes'),
             ),
     
             new BottomNavigationBarItem(
@@ -198,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                   break;
                 case 1:
                   contents = "Symptom Tracker";
-                  navigateToSymptomPage(context);
+                  navigateToStatusPage(context);
                   break;
               }
             });
@@ -214,15 +243,20 @@ class SubPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Symptoms'),
+        title: Text('My Symptom Notes'),
         backgroundColor: Colors.green,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text('Your reported symptoms from the past 14 days'),
-
+            Text('Record your experiences and symptoms here'),
+            TextField(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'How are you feeling?'
+              ),
+            )
 
           ],
         ),
@@ -247,7 +281,6 @@ class SymptomPage extends StatefulWidget {
   }
 }
 
-String dropdownValue = "select";
 class _QueuePage extends State<QueuePage> {
   String dropdownValue = 'select';
 
@@ -290,7 +323,7 @@ class _QueuePage extends State<QueuePage> {
 
 class _SymptomPage extends State<SymptomPage> {
 
-  @override
+
 
   bool hasCough = false;
   bool hasFever = false;
@@ -301,15 +334,15 @@ class _SymptomPage extends State<SymptomPage> {
   bool hasSoreThroat = false;
   bool hasLossofSense = false;
 
-  var _curIndex = 0;
   var contents = "Home";
 
-
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
             title: Text('Check all Symptoms you have'),
+            backgroundColor: Colors.green,
           ),
             body: Container(
               child: Column(
