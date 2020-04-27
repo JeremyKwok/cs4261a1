@@ -18,24 +18,25 @@ String statusToJson(Status data) {
 class Status {
   String id;
   String userId;
-  int pax;
+  int temp;
+
 
   Status({
     this.id,
     this.userId,
-    this.pax
+    this.temp
   });
 
   factory Status.fromJson(Map<String, dynamic> json) => new Status(
     id: json["id"],
     userId: json["userId"],
-    pax: json["pax"]
+    temp: json["temp"]
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "userId": userId,
-    "pax": pax
+    "temp": temp
   };
 
   factory Status.fromDocument(DocumentSnapshot doc) {
