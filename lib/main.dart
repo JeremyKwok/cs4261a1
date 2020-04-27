@@ -1,7 +1,8 @@
 import 'package:cs4261a1/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:cs4261a1/services/authentication.dart';
-import 'package:cs4261a1/pages/root_page.dart';
+import 'package:cs4261a1/ui/pages/root_page.dart';
+
 
 void main() {
   setupLocator();
