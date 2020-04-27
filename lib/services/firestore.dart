@@ -48,7 +48,7 @@ class FirestoreService {
     });
   }
 
-  Future getPostsOnceOff(String userId) async {
+  Future getStatusOnceOff(String userId) async {
     try {
       CollectionReference cr = _userCR.document(userId).collection('status');
       var postDocumentSnapshot = await cr.getDocuments();
@@ -82,7 +82,7 @@ class FirestoreService {
     return _statusController.stream;
   }
 
-  Future deletePost(Status status) async {
+  Future deleteStatus(Status status) async {
     CollectionReference cr = _userCR.document(status.userId).collection('status');
     DocumentReference dr = cr.document(status.date);
     await dr.delete();
