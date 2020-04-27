@@ -7,7 +7,7 @@ class BaseModel extends ChangeNotifier {
   final Auth _auth =
   locator<Auth>();
 
-  FirebaseUser get currentUser => _auth.currentUser;
+  //FirebaseUser get currentUser => _auth.currentUser;
 
   bool _busy = false;
   bool get busy => _busy;

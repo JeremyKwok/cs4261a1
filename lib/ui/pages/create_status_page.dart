@@ -114,7 +114,7 @@ class _StatusMaterialState extends State {
                                     final form = _formKey.currentState;
                                     if (form.validate()) {
                                       form.save();
-                                      _status.userId = _auth.currentUser.email;
+                                      _status.userId = _auth.getCurrentUser().toString();
                                       addStatus(_status);
                                       _showDialog(context);
                                     }
