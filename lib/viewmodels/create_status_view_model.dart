@@ -6,7 +6,7 @@ import 'package:cs4261a1/services/navigation.dart';
 import 'package:cs4261a1/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
 
-class CreatePostViewModel extends BaseModel {
+class CreateStatusViewModel extends BaseModel {
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final DialogService _dialogService = locator<DialogService>();
   final NavigationService _navigationService = locator<NavigationService>();
@@ -15,7 +15,7 @@ class CreatePostViewModel extends BaseModel {
 
   bool get _editting => _edittingStatus != null;
 
-  Future addStatus({@required String date,
+  Future addStatus({@required DateTime date,
   @required int temp,
   @required bool tiredness,
   @required bool bodyache,

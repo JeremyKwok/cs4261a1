@@ -21,7 +21,7 @@ class StatusItem extends StatelessWidget {
           Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 15.0),
-                child: Text("Date: " + status.date + "\nTemp: " + (status.temp/10).toString()),
+                child: Text("Date: " + status.date.toString() + "\nTemp: " + (status.temp/10).toString()),
               )),
           IconButton(
             icon: Icon(Icons.close),
