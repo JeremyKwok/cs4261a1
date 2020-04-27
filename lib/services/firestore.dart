@@ -1,17 +1,36 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/status.dart';
-import '../models/status.dart';
-import '../models/user.dart';
-import '../models/group.dart';
-import '../models/event.dart';
+import 'package:cs4261a1/models/user.dart';
+import 'package:cs4261a1/models/group.dart';
+import 'package:cs4261a1/models/status.dart';
+import 'package:cs4261a1/models/event.dart';
 
 final Firestore db = Firestore.instance;
 
 class FirestoreService {
+
   static final FirestoreService _instance = new FirestoreService.internal();
   factory FirestoreService() => _instance;
   FirestoreService.internal();
+
+  final CollectionReference _userCR = db.collection('users');
+  final CollectionReference _statusCR = db.collection('status');
+
+  Future createUser(User user) async {
+    await _userCR.document(user.userId).setData(user.toJson()).catchError((error) {
+      print('error: $error');
+      return null;
+    });
+  }
+
+  Future getUser(String uid) async {
+    var userData = await _userCR.document(uid).get().catchError((error) {
+      print('error: $error');
+      return null;
+    });
+    return User.fromJson(userData.data);
+  }
+
   Future<Event> createEvent(String activity, String timing, String uid, int pax) async {
     DocumentReference dr = db.collection(timing).document(activity);
     final TransactionHandler createTransaction = (Transaction tx) async {
