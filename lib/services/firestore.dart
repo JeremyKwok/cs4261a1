@@ -1,64 +1,91 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/user.dart';
-import '../models/group.dart';
-import '../models/event.dart';
+import 'package:cs4261a1/models/user.dart';
+import 'package:cs4261a1/models/status.dart';
 
 final Firestore db = Firestore.instance;
 
 class FirestoreService {
+
   static final FirestoreService _instance = new FirestoreService.internal();
   factory FirestoreService() => _instance;
   FirestoreService.internal();
-  Future<Event> createEvent(String activity, String timing, String uid, int pax) async {
-    DocumentReference dr = db.collection(timing).document(activity);
-    final TransactionHandler createTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(dr.collection(uid).document('fields'));
-      final Event event = new Event(id: ds.documentID, userId: uid, pax: 6, attending: 0);
-      final Map<String, dynamic> data = event.toJson();
-      await tx.set(ds.reference, data);
-      return data;
-    };
-    await createGroup(timing, activity, uid, uid, pax);
-    return Firestore.instance.runTransaction(createTransaction).then((mapData){
-      return Event.fromJson(mapData);
-    }).catchError((error) {
+
+  final CollectionReference _userCR = db.collection('users');
+
+  final StreamController<List<Status>> _statusController =
+  StreamController<List<Status>>.broadcast();
+
+  Future createUser(User user) async {
+    await _userCR.document(user.userId).setData(user.toJson()).catchError((error) {
       print('error: $error');
-      return null;
+      return 'error: $error';
     });
   }
-  Future<Group> createGroup(String timing, String activity, String uid, String id, int pax) async {
-    DocumentReference dr = db.collection(timing).document(activity);
-    final TransactionHandler createTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(dr.collection(uid).document());
-      final Group group = new Group(id: ds.documentID, userId: id, pax: pax);
-      final Map<String, dynamic> data = group.toJson();
-      await tx.set(ds.reference, data);
-      return data;
-    };
-    return db.runTransaction(createTransaction).then((mapData){
-      return Group.fromJson(mapData);
-    }).catchError((error) {
+
+  Future<User> getUser(String uid) async {
+    var userData = await _userCR.document(uid).get().catchError((error) {
       print('error: $error');
-      return null;
+      return 'error: $error';
+    });
+    return User.fromJson(userData.data);
+  }
+
+  Future createStatus(Status status) async {
+    CollectionReference cr = _userCR.document(status.userId).collection('status');
+    DocumentReference dr = cr.document(status.date);
+    await dr.setData(status.toJson()).catchError((error) {
+      print('error: $error');
+      return 'error: $error';
     });
   }
-  Future<dynamic> updateEvent(String timing, String activity, String uid, Event event, int pax) async {
-    DocumentReference dr = db.collection(timing).document(activity).collection(uid).document('fields');
-    final TransactionHandler updateTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(dr);
-
-      await tx.update(ds.reference, event.toJson());
-      return {'updated': true};
-    };
-
-    return db
-        .runTransaction(updateTransaction)
-        .then((result) => result['updated'])
-        .catchError((error) {
+  Future updateStatus(Status status) async {
+    CollectionReference cr = _userCR.document(status.userId).collection('status');
+    DocumentReference dr = cr.document(status.date);
+    await dr.updateData(status.toJson()).catchError((error) {
       print('error: $error');
-      return false;
+      return 'error: $error';
     });
+  }
+
+  Future getPostsOnceOff(String userId) async {
+    try {
+      CollectionReference cr = _userCR.document(userId).collection('status');
+      var postDocumentSnapshot = await cr.getDocuments();
+      if (postDocumentSnapshot.documents.isNotEmpty) {
+        return postDocumentSnapshot.documents
+            .map((snapshot) => Status.fromJson(snapshot.data))
+            .where((mappedItem) => mappedItem.date != null)
+            .toList();
+      }
+    } catch (error) {
+      print('error: $error');
+      return 'error: $error';
+    }
+  }
+
+  Stream listenToStatusRealTime(String userId) {
+    CollectionReference cr = _userCR.document(userId).collection('status');
+
+    // Register the handler for when the posts data changes
+    cr.snapshots().listen((statusSnapshot) {
+      if (statusSnapshot.documents.isNotEmpty) {
+        var posts = statusSnapshot.documents
+            .map((snapshot) => Status.fromJson(snapshot.data))
+            .where((mappedItem) => mappedItem.date != null)
+            .toList();
+
+        // Add the posts onto the controller
+        _statusController.add(posts);
+      }
+    });
+    return _statusController.stream;
+  }
+
+  Future deletePost(Status status) async {
+    CollectionReference cr = _userCR.document(status.userId).collection('status');
+    DocumentReference dr = cr.document(status.date);
+    await dr.delete();
   }
 
 }

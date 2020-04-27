@@ -16,27 +16,47 @@ String statusToJson(Status data) {
 }
 
 class Status {
-  String id;
+  String date;
   String userId;
   int temp;
+  bool tiredness;
+  bool bodyache;
+  bool nasalCongestion;
+  bool soreThroat;
+  bool diarrhoea;
 
 
   Status({
-    this.id,
+    this.date,
     this.userId,
-    this.temp
+    this.temp,
+    this.tiredness,
+    this.bodyache,
+    this.nasalCongestion,
+    this.soreThroat,
+    this.diarrhoea
   });
 
   factory Status.fromJson(Map<String, dynamic> json) => new Status(
-    id: json["id"],
+    date: json["date"],
     userId: json["userId"],
-    temp: json["temp"]
+    temp: json["temp"],
+    tiredness: json["tire"],
+    bodyache: json["ache"],
+    nasalCongestion: json["nasalCongestion"],
+    soreThroat: json["soreThroat"],
+    diarrhoea: json["diarrhoea"]
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
+    "date": date,
     "userId": userId,
-    "temp": temp
+    "temp": temp,
+    "tiredness": tiredness,
+    "bodyache": bodyache,
+    "nasalCongestion": nasalCongestion,
+    "soreThroat": soreThroat,
+    "diarrhoea": diarrhoea
   };
 
   factory Status.fromDocument(DocumentSnapshot doc) {
