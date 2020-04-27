@@ -33,7 +33,7 @@ class FirestoreService {
 
   Future createStatus(Status status) async {
     CollectionReference cr = _userCR.document(status.userId).collection('status');
-    DocumentReference dr = cr.document(status.date);
+    DocumentReference dr = cr.document(status.date.toString());
     await dr.setData(status.toJson()).catchError((error) {
       print('error: $error');
       return 'error: $error';
@@ -41,7 +41,7 @@ class FirestoreService {
   }
   Future updateStatus(Status status) async {
     CollectionReference cr = _userCR.document(status.userId).collection('status');
-    DocumentReference dr = cr.document(status.date);
+    DocumentReference dr = cr.document(status.date.toString());
     await dr.updateData(status.toJson()).catchError((error) {
       print('error: $error');
       return 'error: $error';
@@ -84,7 +84,7 @@ class FirestoreService {
 
   Future deleteStatus(Status status) async {
     CollectionReference cr = _userCR.document(status.userId).collection('status');
-    DocumentReference dr = cr.document(status.date);
+    DocumentReference dr = cr.document(status.date.toString());
     await dr.delete();
   }
 
