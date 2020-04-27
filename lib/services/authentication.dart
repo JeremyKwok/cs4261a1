@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cs4261a1/locator.dart';
-import 'package:cs4261a1/models/user.dart';
 import 'firestore.dart';
 
 abstract class BaseAuth {
@@ -25,8 +24,8 @@ class Auth implements BaseAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirestoreService _firestoreService = locator<FirestoreService>();
 
-  User _currentUser;
-  User get currentUser => _currentUser;
+  FirebaseUser _currentUser;
+  FirebaseUser get currentUser => _currentUser;
 
   String parseEmail(String email) {
      if (email.endsWith('@gatech.edu')) {
@@ -38,7 +37,7 @@ class Auth implements BaseAuth {
     email = parseEmail(email);
     FirebaseUser user = (await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password)).user;
-    await _populateCurrentUser(user);
+    _currentUser = user;
     return user.uid;
   }
 
@@ -73,10 +72,4 @@ class Auth implements BaseAuth {
     _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future _populateCurrentUser(FirebaseUser user) async {
-    if (user != null) {
-      // todo
-      _currentUser = await _firestoreService.getUser(user.uid);
-    }
-  }
 }
